@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+
+    <link rel="stylesheet" href="./resources/css/bootstrap.min.css">
+    <script src="./resources/js/jquery-3.6.0.js"></script>
+    <script src="./resources/js/jquery.validate.js"></script>
+    <script src="./resources/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        .form-label {
+            font-weight: bold;
+        }
+
+        label.error {
+            color: red;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div class="container-fluid">
+        <h1>Customer Information</h1>
+
+        <form>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="fullName" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="fullName">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="tel" class="form-control" id="phone">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="address" class="form-label">Address</label>
+                    <input type="text" class="form-control" id="address">
+                </div>
+            </div>
+            <button type="button" id="btnCreate" class="btn btn-primary mb-3">Create Customer</button>
+        </form>
+
+
+
+        <table class="table table-hover" id="tbCustomer">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Full Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Adress</th>
+                    <th scope="col">Balance ($)</th>
+                    <th colspan="5"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <button type="button" class="btn btn-outline-primary">Transfer</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-outline-danger">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <!-- Deposit Modal -->
+    <div class="modal fade" id="depositModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal deposit</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="customerIdDep" class="form-label">Customer ID</label>
+                                <input type="text" class="form-control" id="customerIdDep">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="fullNameDep" class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="fullNameDep">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="balanceDep" class="form-label">Current balance ($)</label>
+                                <input type="text" class="form-control" id="balanceDep">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="transactionAmountDep" class="form-label">Transaction Amount ($)</label>
+                                <input type="text" class="form-control" id="transactionAmountDep">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="btnDeposit" class="btn btn-outline-success">Deposit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Withdraw Modal -->
+    <div class="modal fade" id="withdrawModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal withdraw</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="frmWithdraw">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="customerIdWd" class="form-label">Customer ID</label>
+                                <input type="text" class="form-control" id="customerIdWd">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="fullNameWd" class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="fullNameWd">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="balanceWd" class="form-label">Current balance ($)</label>
+                                <input type="text" class="form-control" id="balanceWd">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="transactionAmountWd" class="form-label">Transaction Amount ($)</label>
+                                <input type="text" class="form-control" name="transactionAmountWd"
+                                    id="transactionAmountWd">
+                            </div>
+                        </div>
+                        <!-- <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="text" class="form-control" name="password" id="password">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                <input type="text" class="form-control" name="confirmPassword" id="confirmPassword">
+                            </div>
+                        </div> -->
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" id="btnWithdraw" class="btn btn-outline-warning">Withdraw</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Modal -->
+    <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal Update</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formUpdate">
+                        <div class="row">         
+                            <div class="col-md-6 mb-3">
+                                <label for="fullNameUp" class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="fullNameUp">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="emailUp" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="emailUp">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="phoneUp" class="form-label">Phone</label>
+                                <input type="text" class="form-control" name="phoneUp" id="phoneUp">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="addressUp" class="form-label">Address</label>
+                                <input type="text" class="form-control" name="addressUp"
+                                    id="addressUp">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" id="btnUpdate" class="btn btn-outline-success">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./resources/js/app.js"></script>
+
+    <script>
+        let customer = new Customer();
+        let deposit = new Deposit();
+        let withdraw = new Withdraw();
+
+        $("#btnCreate").on("click", function () {
+            let fullName = $("#fullName").val();
+            let email = $("#email").val();
+            let phone = $("#phone").val();
+            let address = $("#address").val();
+            let balance = 0;
+
+            customer.id = 0
+            customer.fullName = fullName
+            customer.email = email
+            customer.phone = phone
+            customer.address = address
+            customer.balance = 0
+
+            doCreateCustomer(customer)
+        });
+
+        function doCreateCustomer(customer) {
+            $.ajax({
+                type: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/josn"
+                },
+                url: "http://localhost:3000/customers",
+                data: JSON.stringify(customer)
+            }).done(function () {
+                alert("The customer was created success!")
+            }).fail(function () {
+                alert("The customer was not created success!")
+            })
+        }
+
+        function showDepositModal() {
+            $(".btn-deposit").on("click", function () {
+                $("#depositModal").modal("show");
+
+                let id = $(this).data("id");
+                let fullName = $(this).data("full-name");
+                let balance = $(this).data("balance");
+
+                $("#customerIdDep").val(id);
+                $("#fullNameDep").val(fullName);
+                $("#balanceDep").val(balance);
+            });
+        }
+
+        $('#btnDeposit').on("click", function () {
+            let customerId = $("#customerIdDep").val();
+            let transactionAmount = +$("#transactionAmountDep").val();
+
+            deposit.customerId = customerId
+            deposit.transactionAmount = transactionAmount
+
+            getCustomerByid(customerId).then(function() {
+
+                customer.balance += transactionAmount
+
+                incrementBalance(customer)
+                doDeposit(deposit)
+            });
+        });
+
+        function doDeposit(deposit) {
+            $.ajax({
+                type: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/josn"
+                },
+                url: "http://localhost:3000/deposits",
+                data: JSON.stringify(deposit)
+            }).done(function () {
+                alert("The customer deposit success!")
+            }).fail(function () {
+                alert("The cutomer deposit faild!")
+            })
+        }
+
+        function showWithdrawModal() {
+            $(".btn-withdraw").on("click", function () {
+                $("#withdrawModal").modal("show");
+
+                let id = $(this).data("id");
+                let fullName = $(this).data("full-name");
+                let balance = $(this).data("balance");
+
+                $("#customerIdWd").val(id);
+                $("#fullNameWd").val(fullName);
+                $("#balanceWd").val(balance);
+            });
+        }
+
+        $("#btnWithdraw").on("click", function () {
+            let customerId = $("#customerIdWd").val();
+            let transactionAmount = +$("#transactionAmountWd").val();
+
+            withdraw.customerId = customerId
+            withdraw.transactionAmount = transactionAmount
+
+            getCustomerByid(customerId).then(function() {
+
+                customer.balance -= transactionAmount
+
+                reduceBalance(customer)
+                doWithdraw(withdraw)
+               
+            });
+        });
+
+        function doWithdraw(withdraw) {
+            $.ajax({
+                type: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/josn"
+                },
+                url: "http://localhost:3000/withdraws",
+                data: JSON.stringify(withdraw)
+            }).done(function () {
+                alert("do withraw success!")
+                getAllcustomer()
+            }).fail(function () {
+                alert("do withdraw faild!")
+            })
+        }
+
+
+        // viết hàm xoá.
+        $("btn-delete").on("click", function () {
+            // lấy dữ liệu
+            let customer = $(this)
+            let customerId = customer.attr("data-id")
+            // gọi ajax
+            $.ajax({
+                type: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/josn"
+                },
+                url: "http://localhost:3000/customers/" + {customerId},
+                data: JSON.stringify(customer)
+            }).done(function () {
+                alert("Delete Success")
+            }).fail(function () {
+                alert("Delete Fail!")
+            })
+        })
+
+
+        function incrementBalance(customer) {
+            $.ajax({
+                type: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/josn"
+                },
+                url: "http://localhost:3000/customers/" + customer.id,
+                data: JSON.stringify(customer)
+            }).done(function () {
+
+                alert("Increment Success")
+                getAllcustomer()
+
+            }).fail(function () {
+                alert("Increment Faild")
+            })
+        }
+
+        function reduceBalance(customer) {
+            $.ajax({
+                type: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                url: "http://localhost:3000/customers/" + customer.id,
+                data: JSON.stringify(customer)
+            }).done(function () {
+
+                alert("ruduce balance succuess!")
+                getAllcustomer()
+                
+            }).fail(function () {
+                alert("ruduce Faild")
+            })
+        }
+
+
+        function getCustomerByid(customerId) {
+            return $.ajax({
+                type: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/josn"
+                },
+                url: "http://localhost:3000/customers/" + customerId
+            }).done(function (data) {
+                customer = data
+            }).fail(function () {
+                alert("Get customer faild!")
+            })
+        }
+
+
+        function showAlert() {
+            alert("OKEY")
+            $('#withdrawModal').modal('hide');
+        }
+
+
+        $("#bntUpdate").on("click", function() {
+            customer.fullName = $("#fullNameUp").val()
+            customer.email = $("#emailUp").val()
+            customer.phone = $("#phoneUp").val()
+            customer.address = $("#addressUp").val()
+
+            // code here...
+        })   
+        
+
+        $("#frmWithdraw").validate({
+            rules: {
+                // password: {
+                //     required: true,
+                //     validatePassword: true
+                // },
+                // confirmPassword: {
+                //     equalTo: "#password"
+                // },
+                transactionAmountWd: {
+                    required: true,
+                    number: true,
+                    minlength: 2,
+                    maxlength: 6
+                }
+            },
+            messages: {
+                // password: {
+                //     required: "Trường này là bắt buộc nhập"
+                // },
+                // confirmPassword: {
+                //     equalTo: "Vui lòng nhập cùng trường mật khẩu"
+                // },
+                transactionAmountWd: {
+                    required: "Trường này là bắt buộc nhập",
+                    number: "Vui lòng nhập giá trị số",
+                    minlength: "Giá trị tối thiểu là 2 ký tự",
+                    maxlength: "Giá trị tối đa là 6 ký tự"
+                }
+            },
+            submitHandler: function () {
+                showAlert();
+            }
+        });
+
+        // $.validator.addMethod("validatePassword", function (value, element) {
+        //     return this.optional(element) || /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,20}$/i.test(value);
+        // }, "Hãy nhập mật khẩu từ 5 đến 20 ký tự bao gồm chữ hoa, chữ thường và ít nhất một chữ số");
+
+
+        function getAllcustomer() {
+            $.ajax({
+                type: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/josn"
+                },
+                url: "http://localhost:3000/customers",
+
+            }).done(function (data) {
+
+                let str = '';
+
+                data.forEach(item => {
+
+                    str += ` 
+
+                    <tr>
+                    <th scope="row">${item.id}</th>
+                    <td>${item.fullName}</td>
+                    <td>${item.email}</td>
+                    <td>${item.phone}</td>
+                    <td>${item.address}</td>
+                    <td>${item.balance}</td>
+                    <td>
+                        <button type="button" class="btn btn-outline-secondary btn-edit" data-id="${item.id}">Edit</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-outline-success btn-deposit" data-id="${item.id}">Deposit</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-outline-warning btn-withdraw" data-id="${item.id}">Withdraw</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-outline-primary">Transfer</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-outline-danger btn-delete" data-id=${item.id}>Delete</button>
+                    </td>
+                </tr>
+                `;
+                });
+
+                $("#tbCustomer tbody").html(str)
+                showDepositModal();
+
+                showWithdrawModal();
+
+            }).fail(function () {
+                alert("Faild")
+            })
+        }
+
+        getAllcustomer();
+    </script>
+
+</body>
+
+</html>

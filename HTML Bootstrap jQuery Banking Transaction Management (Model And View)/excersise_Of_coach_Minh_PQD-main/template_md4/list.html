@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/font-awesome/css/all.css">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>List-Customers</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm-5">
+                    <h1>List of customers</h1>
+                </div>
+                <div class="col-sm-7">
+                    <a href="./create.html" class="btn btn-outline-light">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Add New Customer</span>
+                    </a>
+                    <a href="/transfers" class="btn btn-outline-light">
+                        <i class="fa fa-history" aria-hidden="true"></i>
+                        <span>Transfer Money Information</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>phone</th>
+                        <th>Address</th>
+                        <th>Balance</th>
+                        <th colspan="5" class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Tang</td>
+                        <td>Tang@co.cc</td>
+                        <td>12345</td>
+                        <td>28 NTP</td>
+                        <td>1.000.000</td>
+                        <td>
+                            <a href="./update.html" type="button" class="btn btn-outline-secondary">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="./deposit.html" type="button" class="btn btn-outline-success">
+                                <i class="fa-solid fa-plus"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="./withDraw.html" type="button" class="btn btn-outline-warning">
+                                <i class="fa-solid fa-minus"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="./transfer.html" type="button" class="btn btn-outline-primary">
+                                <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="./suspend.html" type="button" class="btn btn-outline-danger">
+                                <i class="fa-solid fa-ban"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Cost</td>
+                        <td>cost@co.cc</td>
+                        <td>123456</td>
+                        <td>10 LE Loi</td>
+                        <td>2.000.000</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-secondary">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-outline-success">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-outline-warning">
+                                <i class="fa-solid fa-minus"></i>
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-outline-primary">
+                                <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-outline-danger">
+                                <i class="fa-solid fa-ban"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>
